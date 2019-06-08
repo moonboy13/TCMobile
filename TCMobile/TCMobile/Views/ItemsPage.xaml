@@ -8,6 +8,10 @@
              Title="{Binding Title}"
              x:Name="BrowseItemsPage">
 
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Test Connection" Clicked="TestConnection_Clicked" />
+    </ContentPage.ToolbarItems>
+
     <StackLayout>
         <ListView x:Name="ItemsListView"
                 ItemsSource="{Binding Items}"

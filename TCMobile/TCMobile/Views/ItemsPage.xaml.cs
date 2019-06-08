@@ -10,6 +10,7 @@ using Xamarin.Forms.Xaml;
 using TCMobile.Models;
 using TCMobile.Views;
 using TCMobile.ViewModels;
+using TeamCityAPI;
 
 namespace TCMobile.Views
 {
@@ -39,9 +40,10 @@ namespace TCMobile.Views
 			ItemsListView.SelectedItem = null;
 		}
 
-		async void AddItem_Clicked(object sender, EventArgs e)
+		void TestConnection_Clicked(object sender, EventArgs e)
 		{
-			await Navigation.PushModalAsync(new NavigationPage(new NewItemPage()));
+			var connection = new ServerConnection("APIUser", "APIUser");
+			connection.TestConnection();
 		}
 
 		protected override void OnAppearing()
@@ -50,6 +52,11 @@ namespace TCMobile.Views
 
 			if (viewModel.Items.Count == 0)
 				viewModel.LoadItemsCommand.Execute(null);
+		}
+
+		private void ToolbarItem_Clicked(object sender, EventArgs e)
+		{
+
 		}
 	}
 }
