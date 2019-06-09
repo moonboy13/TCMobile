@@ -42,7 +42,7 @@ namespace TCMobile.Views
 
 		void TestConnection_Clicked(object sender, EventArgs e)
 		{
-			var connection = new ServerConnection("APIUser", "APIUser");
+			var connection = new ServerConnection("http://192.168.56.1", 8080);
 			connection.TestConnection();
 		}
 
