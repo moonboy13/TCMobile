@@ -9,12 +9,12 @@ namespace TeamCityAPI
 	/// Responsible for creating the connection to the TeamCity server instance.
 	/// Consider using the factory design pattern here (no public constructors).
 	/// </summary>
-	public class ServerConnection
+	public class ServerConnection : IDisposable
 	{
 		//TODO abstract to an interface for easy injection
 		//TODO implement access token for authentication
 		//TODO implement guest user for authentication
-		string _ServerURL = "http://localhost:8080/basicAuth/app/rest/2018.1";
+		string _ServerURL = "http://192.168.56.1:8080/basicAuth/app/rest/2018.1";
 		string _Username;
 		string _Password;
 		string _Authorization = "Basic";
@@ -36,13 +36,22 @@ namespace TeamCityAPI
 			_client = new HttpClient();
 		}
 
+		/// <summary>
+		/// Dispose uneeded resources.
+		/// </summary>
+		public void Dispose() => ((IDisposable)_client).Dispose();
+
 		/// <summary> 
 		/// Validate we can connect succesfully to the server.
 		/// </summary>
 		public async void TestConnection()
 		{
 			_client.DefaultRequestHeaders.Authorization = _AuthenticationHeaderValue;
-			var response = await _client.GetAsync(_ServerURL);
+			HttpResponseMessage response = await _client.GetAsync(_ServerURL);
+
+			// Will eventually need this to give some error handling if the connection is bad.
 		}
+
+
 	}
 }
