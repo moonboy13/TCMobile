@@ -2,6 +2,7 @@
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace TeamCityAPI
 {
@@ -20,7 +21,7 @@ namespace TeamCityAPI
 	/// Responsible for creating the connection to the TeamCity server instance.
 	/// Consider using the factory design pattern here (no public constructors).
 	/// </summary>
-	public class ServerConnection : IDisposable
+	public class ServerConnection : IDisposable, IServerConnection
 	{
 		//TODO abstract to an interface for easy injection, or create a factory
 		string _serverURL;
@@ -38,6 +39,7 @@ namespace TeamCityAPI
 		/// <param name="username"></param>
 		/// <param name="password"></param>
 		public ServerConnection(string baseURL, int port, string username, string password)
+			: this()
 		{
 			_connectionType = ConnectionType.Basic;
 			_authorization = "Basic";
@@ -47,6 +49,7 @@ namespace TeamCityAPI
 		}
 
 		public ServerConnection(string baseURL, int port, string token)
+			: this()
 		{
 			_connectionType = ConnectionType.Token;
 			_authorization = "Bearer";
@@ -55,9 +58,15 @@ namespace TeamCityAPI
 		}
 
 		public ServerConnection(string baseURL, int port)
+			: this()
 		{
 			_connectionType = ConnectionType.Guest;
 			_serverURL = string.Format("{0}:{1}/{2}/", baseURL, port.ToString(), "guestAuth");
+		}
+
+		private ServerConnection()
+		{
+			_client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 		}
 
 		/// <summary>
@@ -71,7 +80,7 @@ namespace TeamCityAPI
 		public async void TestConnection()
 		{
 			_client.DefaultRequestHeaders.Authorization = BuildAuthHeader();
-			HttpResponseMessage response = await _client.GetAsync(string.Format("{0}app/rest/",_serverURL));
+			HttpResponseMessage response = await _client.GetAsync(string.Format("{0}app/rest/", _serverURL));
 			response.EnsureSuccessStatusCode();
 		}
 
@@ -88,6 +97,21 @@ namespace TeamCityAPI
 				default:
 					return new AuthenticationHeaderValue(_authorization, _token);
 			}
+		}
+
+		/// <summary>
+		/// Makes a request of the API.
+		/// </summary>
+		/// <param name="requestURI">URI to request against.</param>
+		/// <param name="callback">Handler function for the response.</param>
+		public async Task<HttpResponseMessage> MakeRequest(string requestURI)
+		{
+			_client.DefaultRequestHeaders.Authorization = BuildAuthHeader();
+			HttpResponseMessage response = await _client.GetAsync(string.Format("{0}app/rest/{1}", _serverURL, requestURI));
+			response.EnsureSuccessStatusCode();
+
+			return response;
+
 		}
 
 	}

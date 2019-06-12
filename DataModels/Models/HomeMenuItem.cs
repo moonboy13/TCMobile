@@ -6,7 +6,11 @@ namespace TCMobile.Models
 {
 	public enum MenuItemType
 	{
-		Browse,
+		RunningBuilds,
+		Projects,
+		Changes,
+		Agents,
+		BuildQueue,
 		About
 	}
 	public class HomeMenuItem

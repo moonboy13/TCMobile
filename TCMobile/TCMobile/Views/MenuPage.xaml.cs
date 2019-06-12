@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Xamarin.Forms;
+using System.Resources;
 using Xamarin.Forms.Xaml;
 
 namespace TCMobile.Views
@@ -20,8 +21,12 @@ namespace TCMobile.Views
 
 			menuItems = new List<HomeMenuItem>
 			{
-				new HomeMenuItem {Id = MenuItemType.Browse, Title="Browse" },
-				new HomeMenuItem {Id = MenuItemType.About, Title="About" }
+				new HomeMenuItem {Id = MenuItemType.RunningBuilds, Title=AppStrings.RunningBuilds },
+				new HomeMenuItem {Id = MenuItemType.Projects, Title=AppStrings.Projects },
+				new HomeMenuItem {Id = MenuItemType.Changes, Title=AppStrings.Changes },
+				new HomeMenuItem {Id = MenuItemType.Agents, Title=AppStrings.BuildAgents },
+				new HomeMenuItem {Id = MenuItemType.BuildQueue, Title=AppStrings.BuildQueue },
+				new HomeMenuItem {Id = MenuItemType.About, Title=AppStrings.About }
 			};
 
 			ListViewMenu.ItemsSource = menuItems;
