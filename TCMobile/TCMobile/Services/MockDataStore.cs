@@ -60,5 +60,7 @@ namespace TCMobile.Services
 		{
 			return await Task.FromResult(items);
 		}
+
+		public Task<bool> SetItems(IEnumerable<Item> items) => throw new NotImplementedException();
 	}
 }

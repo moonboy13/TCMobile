@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TCMobile.Models
 {
-	public class Project
+	public class ProjectSummary
 	{
 		public string Id;
 		public string Name;

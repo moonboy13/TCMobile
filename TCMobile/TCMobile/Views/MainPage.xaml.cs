@@ -22,6 +22,7 @@ namespace TCMobile.Views
 			MasterBehavior = MasterBehavior.Popover;
 
 			MenuPages.Add((int)MenuItemType.RunningBuilds, (NavigationPage)Detail);
+			MenuPages.Add((int)MenuItemType.Projects, new NavigationPage(new AllProjectsPage(new ViewModels.ProjectSummaryViewModel())));
 		}
 
 		public async Task NavigateFromMenu(int id)

@@ -14,6 +14,7 @@ namespace TCMobile
 			InitializeComponent();
 
 			DependencyService.Register<MockDataStore>();
+			DependencyService.Register<ProjectSummaryDataStore>();
 			MainPage = new MainPage();
 		}
 

@@ -5,7 +5,7 @@ using Xamarin.Forms;
 
 namespace TCMobile.ViewModels
 {
-	public class AboutViewModel : BaseViewModel
+	public class AboutViewModel : BaseViewModel<string>
 	{
 		public AboutViewModel()
 		{

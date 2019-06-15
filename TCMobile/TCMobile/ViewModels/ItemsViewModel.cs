@@ -10,7 +10,7 @@ using TCMobile.Views;
 
 namespace TCMobile.ViewModels
 {
-	public class ItemsViewModel : BaseViewModel
+	public class ItemsViewModel : BaseViewModel<Item>
 	{
 		public ObservableCollection<Item> Items { get; set; }
 		public Command LoadItemsCommand { get; set; }

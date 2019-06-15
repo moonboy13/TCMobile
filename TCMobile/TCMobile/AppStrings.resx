@@ -132,6 +132,9 @@
   <data name="Projects" xml:space="preserve">
     <value>Projects</value>
   </data>
+  <data name="ProjectsSummary" xml:space="preserve">
+    <value>Project Summary</value>
+  </data>
   <data name="RunningBuilds" xml:space="preserve">
     <value>Running Builds</value>
   </data>

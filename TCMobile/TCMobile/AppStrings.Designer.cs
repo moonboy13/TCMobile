@@ -106,6 +106,15 @@ namespace TCMobile {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Project Summary.
+        /// </summary>
+        internal static string ProjectsSummary {
+            get {
+                return ResourceManager.GetString("ProjectsSummary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Running Builds.
         /// </summary>
         internal static string RunningBuilds {
