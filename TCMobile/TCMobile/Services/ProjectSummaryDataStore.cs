@@ -31,7 +31,10 @@ namespace TCMobile.Services
 
 		public Task<bool> DeleteItemAsync(string id) => throw new NotImplementedException();
 		public Task<ProjectSummary> GetItemAsync(string id) => throw new NotImplementedException();
-		public Task<IEnumerable<ProjectSummary>> GetItemsAsync(bool forceRefresh = false) => throw new NotImplementedException();
+		public async Task<IEnumerable<ProjectSummary>> GetItemsAsync(bool forceRefresh = false)
+		{
+			return await Task.FromResult(Projects);
+		}
 		public Task<bool> UpdateItemAsync(ProjectSummary item) => throw new NotImplementedException();
 	}
 }

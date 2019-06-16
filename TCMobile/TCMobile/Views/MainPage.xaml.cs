@@ -6,6 +6,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 using TCMobile.Models;
+using System.Diagnostics;
 
 namespace TCMobile.Views
 {
@@ -22,7 +23,6 @@ namespace TCMobile.Views
 			MasterBehavior = MasterBehavior.Popover;
 
 			MenuPages.Add((int)MenuItemType.RunningBuilds, (NavigationPage)Detail);
-			MenuPages.Add((int)MenuItemType.Projects, new NavigationPage(new AllProjectsPage(new ViewModels.ProjectSummaryViewModel())));
 		}
 
 		public async Task NavigateFromMenu(int id)
@@ -37,6 +37,13 @@ namespace TCMobile.Views
 					case (int)MenuItemType.About:
 						MenuPages.Add(id, new NavigationPage(new AboutPage()));
 						break;
+					case (int)MenuItemType.Projects:
+						MenuPages.Add(id, new NavigationPage(new AllProjectsPage(new ViewModels.ProjectSummaryViewModel())));
+						break;
+					default:
+						// avoid crashing the app if everything isn't hooked up.
+						Debug.WriteLine(String.Format("Unknown menu type: {0}", id));
+						return;
 				}
 			}
 

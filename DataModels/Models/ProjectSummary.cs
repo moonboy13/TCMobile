@@ -6,10 +6,10 @@ namespace TCMobile.Models
 {
 	public class ProjectSummary
 	{
-		public string Id;
-		public string Name;
-		public string Description;
-		public string href;
-		public string WebUrl;
+		public string Id { get; set; }
+		public string Name { get; set; }
+		public string Description { get; set; }
+		public string href { get; set; }
+		public string WebUrl { get; set; }
 	}
 }

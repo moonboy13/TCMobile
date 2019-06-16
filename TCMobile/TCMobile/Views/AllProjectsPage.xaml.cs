@@ -18,8 +18,6 @@ namespace TCMobile.Views
 	public partial class AllProjectsPage : ContentPage
 	{
 		ProjectSummaryViewModel _ViewModel;
-		IServerConnection _Connection;
-		Projects _Projects;
 		
 
 		public AllProjectsPage(ProjectSummaryViewModel ViewModel)
@@ -27,8 +25,6 @@ namespace TCMobile.Views
 			InitializeComponent();
 
 			BindingContext = _ViewModel = ViewModel;
-			_Connection = new ServerConnection("http://192.168.56.1", 8080);
-			_Projects = new Projects(_Connection);
 		}
 
 		public AllProjectsPage()
@@ -44,20 +40,7 @@ namespace TCMobile.Views
 			_ViewModel = new ProjectSummaryViewModel();
 			_ViewModel.DataStore.AddItemAsync(project).Wait();
 			BindingContext = _ViewModel;
-			_Connection = new ServerConnection("http://192.168.56.1", 8080);
-			_Projects = new Projects(_Connection);
-		}
 
-		protected override void OnAppearing()
-		{
-			LoadData();
-			base.OnAppearing();
-		}
-
-		async void LoadData()
-		{
-			var projects = await _Projects.GetProjects();
-			await _ViewModel.DataStore.SetItems(projects);
 		}
 
 		async void Handle_ItemTapped(object sender, ItemTappedEventArgs e)

@@ -8,28 +8,14 @@
              Title="{Binding Title}"
              x:Name="AllProjects">
     <ListView x:Name="ProjectsListView"
-            ItemsSource="{Binding Projects}"
-            VerticalOptions="FillAndExpand"
-            HasUnevenRows="True"
-            ItemTapped="Handle_ItemTapped"
-            CachingStrategy="RecycleElement">
-        <!--<ListView.ItemSource>
-            <x:Array Type="{x:Type local:ProjectSummary}">
-                <local:ProjectSummary 
-                    ID="1" 
-                    Name="Example" 
-                    Description="Example project for building the view."
-                    href="/rest/api/projects"
-                    WebUrl="localhost:8080/rest/api/projects"/>
-                <local:ProjectSummary
-                    ID="20"
-                    Name="FooBar"
-                    Description="Another example project for the view."
-                    href="/rest/api/projects"
-                    WebUrl="localhost:8080/rest/api/projects" />
-            </x:Array>
-        </ListView.ItemSource>-->
-        <!--Built in Cells-->
+              ItemsSource="{Binding Projects}"
+              VerticalOptions="FillAndExpand"
+              HasUnevenRows="True"
+              ItemTapped="Handle_ItemTapped"
+              CachingStrategy="RecycleElement"
+              RefreshCommand="{Binding LoadItemsCommand}"
+              IsPullToRefreshEnabled="True"
+              IsRefreshing="{Binding IsBusy, Mode=OneWay}">
         <ListView.ItemTemplate>
             <DataTemplate>
                 <ViewCell>

@@ -7,6 +7,8 @@ using Xamarin.Forms;
 
 using TCMobile.Models;
 using TCMobile.Views;
+using System.Collections.Generic;
+using TeamCityAPI;
 
 namespace TCMobile.ViewModels
 {
@@ -15,10 +17,51 @@ namespace TCMobile.ViewModels
 		public ObservableCollection<ProjectSummary> Projects { get; set; }
 		public Command LoadItemsCommand { get; set; }
 
+		IServerConnection _Connection;
+		Projects _Projects;
+
 		public ProjectSummaryViewModel()
 		{
 			Title = AppStrings.ProjectsSummary;
-			Projects = new ObservableCollection<ProjectSummary>();
+			LoadItemsCommand = new Command(async () => await LoadItems());
+			_Connection = new ServerConnection("http://192.168.56.1", 8080);
+			_Projects = new Projects(_Connection);
+			Task.Run(async () => await LoadItems());
+
+		}
+
+		async Task LoadItems()
+		{
+			// Avoid double loading the data into the view
+			if(IsBusy)
+			{
+				return;
+			}
+
+			IsBusy = true;
+
+			try
+			{
+				var projectsTask = _Projects.GetProjects();
+				var updatedProjects = new ObservableCollection<ProjectSummary>();
+				Projects?.Clear();
+				IEnumerable<ProjectSummary> projects = await projectsTask;
+				foreach (var project in projects)
+				{
+					updatedProjects.Add(project);
+				}
+
+				Projects = updatedProjects;
+				OnPropertyChanged(nameof(Projects));
+			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine(ex);
+			}
+			finally
+			{
+				IsBusy = false;
+			}
 		}
 	}
 }
