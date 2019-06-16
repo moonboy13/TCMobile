@@ -9,22 +9,22 @@ namespace TCMobile.Services
 {
 	public class ProjectSummaryDataStore : IDataStore<ProjectSummary>
 	{
-		List<ProjectSummary> _Projects;
+		List<ProjectSummary> Projects;
 
 		public ProjectSummaryDataStore()
 		{
-			_Projects = new List<ProjectSummary>();
+			Projects = new List<ProjectSummary>();
 		}
 
 		public Task<bool> AddItemAsync(ProjectSummary item)
 		{
-			_Projects.Add(item);
+			Projects.Add(item);
 			return Task.FromResult(true);
 		}
 
 		public Task<bool> SetItems(IEnumerable<ProjectSummary> items)
 		{
-			_Projects = items.ToList();
+			Projects = items.ToList();
 
 			return Task.FromResult(true);
 		}

@@ -3,6 +3,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using TCMobile.Services;
 using TCMobile.Views;
+using TeamCityAPI;
 
 namespace TCMobile
 {
@@ -15,6 +16,7 @@ namespace TCMobile
 
 			DependencyService.Register<MockDataStore>();
 			DependencyService.Register<ProjectSummaryDataStore>();
+
 			MainPage = new MainPage();
 		}
 
