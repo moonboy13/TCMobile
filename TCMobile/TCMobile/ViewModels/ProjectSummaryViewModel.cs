@@ -26,10 +26,12 @@ namespace TCMobile.ViewModels
 			LoadItemsCommand = new Command(async () => await LoadItems());
 			_Connection = new ServerConnection("http://192.168.56.1", 8080);
 			_Projects = new Projects(_Connection);
-			Task.Run(async () => await LoadItems());
-
 		}
 
+		/// <summary>
+		/// Responsible for firing off the request to the server and parsing the response.
+		/// </summary>
+		/// <returns></returns>
 		async Task LoadItems()
 		{
 			// Avoid double loading the data into the view
@@ -57,6 +59,7 @@ namespace TCMobile.ViewModels
 			catch (Exception ex)
 			{
 				Debug.WriteLine(ex);
+				DisplayErrorHandler?.Invoke(ex.Message);
 			}
 			finally
 			{

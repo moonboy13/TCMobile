@@ -6,7 +6,8 @@
              mc:Ignorable="d"
              x:Class="TCMobile.Views.AboutPage"
              xmlns:vm="clr-namespace:TCMobile.ViewModels"
-             Title="{Binding Title}">
+             Title="{Binding Title}"
+             Visual="Material">
     
     <ContentPage.BindingContext>
         <vm:AboutViewModel />

@@ -5,7 +5,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="TCMobile.Views.ItemDetailPage"
-             Title="{Binding Title}">
+             Title="{Binding Title}"
+             Visual="Material">
 
     <StackLayout Spacing="20" Padding="15">
         <Label Text="Text:" FontSize="Medium" />

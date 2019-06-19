@@ -18,12 +18,13 @@ namespace TCMobile.Views
 	public partial class AllProjectsPage : ContentPage
 	{
 		ProjectSummaryViewModel _ViewModel;
-		
+
 
 		public AllProjectsPage(ProjectSummaryViewModel ViewModel)
 		{
 			InitializeComponent();
 
+			ViewModel.DisplayErrorHandler = DisplayError;
 			BindingContext = _ViewModel = ViewModel;
 		}
 
@@ -39,8 +40,15 @@ namespace TCMobile.Views
 
 			_ViewModel = new ProjectSummaryViewModel();
 			_ViewModel.DataStore.AddItemAsync(project).Wait();
+			_ViewModel.DisplayErrorHandler = DisplayError;
 			BindingContext = _ViewModel;
 
+		}
+
+		protected override void OnAppearing()
+		{
+			base.OnAppearing();
+			_ViewModel.LoadItemsCommand?.Execute(null);
 		}
 
 		async void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
@@ -52,6 +60,11 @@ namespace TCMobile.Views
 
 			//Deselect Item
 			((ListView)sender).SelectedItem = null;
+		}
+
+		void DisplayError(string message)
+		{
+			DisplayAlert(AppStrings.Error, message, AppStrings.Ok);
 		}
 	}
 }

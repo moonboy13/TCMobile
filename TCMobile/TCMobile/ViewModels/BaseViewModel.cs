@@ -13,6 +13,7 @@ namespace TCMobile.ViewModels
 	public class BaseViewModel<T> : INotifyPropertyChanged
 	{
 		public IDataStore<T> DataStore => DependencyService.Get<IDataStore<T>>();
+		public Action<string> DisplayErrorHandler { get; set; }
 
 		bool isBusy = false;
 		public bool IsBusy
@@ -28,11 +29,11 @@ namespace TCMobile.ViewModels
 			set { SetProperty(ref title, value); }
 		}
 
-		protected bool SetProperty<T>(ref T backingStore, T value,
+		protected bool SetProperty<U>(ref U backingStore, U value,
 			[CallerMemberName]string propertyName = "",
 			Action onChanged = null)
 		{
-			if (EqualityComparer<T>.Default.Equals(backingStore, value))
+			if (EqualityComparer<U>.Default.Equals(backingStore, value))
 				return false;
 
 			backingStore = value;

@@ -6,7 +6,8 @@
              mc:Ignorable="d"
              x:Class="TCMobile.Views.AllProjectsPage"
              Title="{Binding Title}"
-             x:Name="AllProjects">
+             x:Name="AllProjects"
+             Visual="Material">
     <ListView x:Name="ProjectsListView"
               ItemsSource="{Binding Projects}"
               VerticalOptions="FillAndExpand"

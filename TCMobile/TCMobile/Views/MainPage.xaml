@@ -5,7 +5,8 @@
             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
             mc:Ignorable="d"
             xmlns:views="clr-namespace:TCMobile.Views"
-            x:Class="TCMobile.Views.MainPage">
+            x:Class="TCMobile.Views.MainPage"
+            Visual="Material">
 
     <MasterDetailPage.Master>
         <views:MenuPage />

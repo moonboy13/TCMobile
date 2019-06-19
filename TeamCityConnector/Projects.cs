@@ -21,6 +21,12 @@ namespace TeamCityAPI
 		public async Task<List<ProjectSummary>> GetProjects()
 		{
 			HttpResponseMessage response = await _serverConnection.MakeRequest("projects");
+
+			if (!response.IsSuccessStatusCode)
+			{
+				throw new HttpRequestException(response.ReasonPhrase);
+			}
+
 			string data = await response.Content.ReadAsStringAsync();
 			JObject responseData = JObject.Parse(data);
 			List<ProjectSummary> projectSummaries = new List<ProjectSummary>();
