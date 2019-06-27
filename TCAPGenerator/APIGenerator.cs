@@ -13,10 +13,19 @@ namespace TCAPIGenerator
 			"using System;" + Environment.NewLine + Environment.NewLine +
 			"namespace FOO" + Environment.NewLine + "{{" + Environment.NewLine +
 			"\tpublic class {0}" + Environment.NewLine + "\t{{" + Environment.NewLine +
-			"\t\tstring _rootPath = \"{1}\";" + Environment.NewLine;
+			"\t\tstring _rootPath = \"{1}\";" + Environment.NewLine + Environment.NewLine;
+
+		static string _MethodDefintionTemplate =
+			"\t\t/// <summary>" + Environment.NewLine +
+			"\t\t/// {0}" + Environment.NewLine +
+			"\t\t/// </summary>" + Environment.NewLine +
+			"\t\tpublic void {1}({2})" + Environment.NewLine +
+			"\t\t{{" + Environment.NewLine;
+
+		static string _MethodEndTemplate = $"\t\t}}{Environment.NewLine}{Environment.NewLine}";
 
 		static string _EndTemplate =
-			$"\t}}{Environment.NewLine}" +
+			"\t}" + Environment.NewLine +
 			"}";
 		#endregion
 
@@ -52,12 +61,28 @@ namespace TCAPIGenerator
 		static void ProcessResource(XElement resource)
 		{
 			// Pull the root path off the resource. The last portion of this name will server as the class name.
-			string path = resource.Attributes().FirstOrDefault(att => att.Name.LocalName.Trim().ToLower() == "path").Value;
+			string path = resource.Attribute(XName.Get("path")).Value;
 			string className = _TI.ToTitleCase(path.Split('/').Last());
 			string filePath = @"/test/" + className + ".cs";
 
 			File.WriteAllText(filePath, string.Format(_ClassHeaderTemplate, className, path));
+
+			// First parse all the root level methods and generate a function for them.
+			foreach (var method in resource.Elements("method"))
+			{
+				AddMethod(filePath, method);
+			}
+
 			File.AppendAllText(filePath, _EndTemplate);
+		}
+
+		static void AddMethod(string filePath, XElement methodElement)
+		{
+			string methodName = string.Format("{0}_{1}", methodElement.Attribute(XName.Get("name")).Value, methodElement.Attribute(XName.Get("id")).Value);
+			string methodDescription = methodElement.Elements(XName.Get("doc")).FirstOrDefault()?.Value.Trim() ?? String.Empty;
+
+			File.AppendAllText(filePath, String.Format(_MethodDefintionTemplate, methodDescription, methodName, String.Empty));
+			File.AppendAllText(filePath, _MethodEndTemplate);
 		}
 
 	}
