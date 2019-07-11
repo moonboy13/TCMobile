@@ -3,6 +3,8 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
+using System.Text.RegularExpressions;
+using System.Text;
 
 namespace TCAPIGenerator
 {
@@ -27,6 +29,13 @@ namespace TCAPIGenerator
 		static string _EndTemplate =
 			"\t}" + Environment.NewLine +
 			"}";
+		#endregion
+
+		#region XML Attributes
+		static XName _XPATH = XName.Get("path");
+		static XName _XNAME = XName.Get("name");
+		static XName _XID = XName.Get("id");
+		static XName _XDOC = XName.Get("doc");
 		#endregion
 
 		static string _inputFile = Path.Combine("APIDefinition", "2019.1.65998", "APIDefinition.xml");
@@ -54,14 +63,14 @@ namespace TCAPIGenerator
 
 			foreach (var resource in resources)
 			{
-				ProcessResource(resource);
+				ProcessRootResource(resource);
 			}
 		}
 
-		static void ProcessResource(XElement resource)
+		static void ProcessRootResource(XElement resource)
 		{
 			// Pull the root path off the resource. The last portion of this name will server as the class name.
-			string path = resource.Attribute(XName.Get("path")).Value;
+			string path = resource.Attribute(_XPATH).Value;
 			string className = _TI.ToTitleCase(path.Split('/').Last());
 			string filePath = @"/test/" + className + ".cs";
 
@@ -73,15 +82,49 @@ namespace TCAPIGenerator
 				AddMethod(filePath, method);
 			}
 
+			// Next parse sub-resource nodes. Pull out the additional path element
+			// and the new methods which utilize it.
+			foreach (var subResorce in resource.Elements("resource"))
+			{
+				string subPath = subResorce.Attribute(_XPATH).Value;
+
+				foreach (var method in subResorce.Elements("method"))
+				{
+					AddMethod(filePath, method, subPath);
+				}
+			}
+
 			File.AppendAllText(filePath, _EndTemplate);
 		}
 
-		static void AddMethod(string filePath, XElement methodElement)
+		static void AddMethod(string filePath, XElement methodElement, string subUri = null)
 		{
-			string methodName = string.Format("{0}_{1}", methodElement.Attribute(XName.Get("name")).Value, methodElement.Attribute(XName.Get("id")).Value);
-			string methodDescription = methodElement.Elements(XName.Get("doc")).FirstOrDefault()?.Value.Trim() ?? String.Empty;
+			string methodName = string.Format("{0}_{1}", methodElement.Attribute(_XNAME).Value, methodElement.Attribute(_XID).Value);
+			string methodDescription = methodElement.Elements(_XDOC).FirstOrDefault()?.Value.Trim() ?? string.Empty;
+			var methodParameters = new StringBuilder();
+			string subUriString = string.Empty;
 
-			File.AppendAllText(filePath, String.Format(_MethodDefintionTemplate, methodDescription, methodName, String.Empty));
+			if (subUri != null)
+			{
+				subUriString = string.Format("\t\t\tstring subUri = $\"{0}\";" + Environment.NewLine, subUri);
+				foreach (Match param in Regex.Matches(subUri, @"\/{(\w+)}"))
+				{
+					if (methodParameters.Length != 0)
+					{
+						methodParameters.Append(", ");
+					}
+
+					methodParameters.Append(string.Format("string {0}", param.Groups[1].Value));
+				}
+			}
+			else
+			{
+				subUriString = string.Format("\t\t\tstring subUri = string.Emtpy;" + Environment.NewLine);
+			}
+
+			// Write out the information to our file.
+			File.AppendAllText(filePath, string.Format(_MethodDefintionTemplate, methodDescription, methodName, methodParameters.ToString()));
+			File.AppendAllText(filePath, subUriString);
 			File.AppendAllText(filePath, _MethodEndTemplate);
 		}
 
