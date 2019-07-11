@@ -12,10 +12,17 @@ namespace TCAPIGenerator
 	{
 		#region Templates
 		static string _ClassHeaderTemplate =
-			"using System;" + Environment.NewLine + Environment.NewLine +
+			"using System;" + Environment.NewLine +
+			"using System.Net.Http;" + Environment.NewLine +
+			"using System.Threading.Tasks;" + Environment.NewLine + Environment.NewLine +
 			"namespace FOO" + Environment.NewLine + "{{" + Environment.NewLine +
 			"\tpublic class {0}" + Environment.NewLine + "\t{{" + Environment.NewLine +
-			"\t\tstring _rootPath = \"{1}\";" + Environment.NewLine + Environment.NewLine;
+			"\t\tstring _rootPath = \"{1}\";" + Environment.NewLine +
+			"\t\tIServerConnection _serverConnection;" + Environment.NewLine + Environment.NewLine +
+			"\t\tpublic {0}(IServerConnection connection)" + Environment.NewLine +
+			"\t\t{{" + Environment.NewLine +
+			"\t\t\t_serverConnection = connection;" + Environment.NewLine +
+			"\t\t}}" + Environment.NewLine + Environment.NewLine;
 
 		static string _MethodDefintionTemplate =
 			"\t\t/// <summary>" + Environment.NewLine +
