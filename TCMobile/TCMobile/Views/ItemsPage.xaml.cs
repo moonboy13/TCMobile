@@ -42,8 +42,15 @@ namespace TCMobile.Views
 
 		void TestConnection_Clicked(object sender, EventArgs e)
 		{
-			var connection = new ServerConnection("http://192.168.56.1", 8080);
-			connection.TestConnection();
+			try
+			{
+				var connection = new ServerConnection("http://192.168.56.1", 8080);
+				Task.Run(async () => await connection.TestConnection()).Wait();
+			}
+			catch (Exception ex)
+			{
+				DisplayAlert(AppStrings.Error, ex.Message, AppStrings.Ok);
+			}
 		}
 
 		protected override void OnAppearing()
@@ -57,6 +64,10 @@ namespace TCMobile.Views
 		private void ToolbarItem_Clicked(object sender, EventArgs e)
 		{
 
+		}
+		void DisplayError(string message)
+		{
+			DisplayAlert(AppStrings.Error, message, AppStrings.Ok);
 		}
 	}
 }

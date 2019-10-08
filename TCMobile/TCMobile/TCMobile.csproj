@@ -17,7 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\DataModels\DataModels.csproj" />
-    <ProjectReference Include="..\..\TeamCityConnector\TeamCityAPI.csproj" />
+    <ProjectReference Include="..\..\TeamCityConnector\TCConnector.csproj" />
   </ItemGroup>
 
   <ItemGroup>
