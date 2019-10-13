@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Windows.Input;
-
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace TCMobile.ViewModels
@@ -11,7 +11,7 @@ namespace TCMobile.ViewModels
 		{
 			Title = "About";
 
-			OpenWebCommand = new Command(() => Device.OpenUri(new Uri("https://xamarin.com/platform")));
+			OpenWebCommand = new Command( async () => await Launcher.OpenAsync(new Uri("https://xamarin.com/platform")));
 		}
 
 		public ICommand OpenWebCommand { get; }

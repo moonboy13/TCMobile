@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="TCMobile.Views.ConnectionInformation">
+    <ContentPage.Content>
+        <StackLayout>
+            <Entry Placeholder="Server URL" Text="{Binding ConnectionData.Url}"/>
+            <Entry Placeholder="Port" Text="{Binding ConnectionData.Port}" Keyboard="Numeric"/>
+            <Picker Title="Connection Type" ItemsSource="{Binding ConnectionTypes}" SelectedItem="{Binding ConnectionData.ConnectionType}" />
+            <Entry Placeholder="Username" Text="{Binding ConnectionData.Username}"/>
+            <Entry IsPassword="True" Placeholder="Password" Text="{Binding ConnectionData.Password}"/>
+            <Entry IsPassword="True" Placeholder="Authorization Token" Text="{Binding ConnectionData.AuthToken}"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

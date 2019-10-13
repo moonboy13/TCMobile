@@ -11,5 +11,7 @@ namespace TCConnector
 		public string Username;
 		public string Password;
 		public string AuthToken;
+		public string Url;
+		public int Port;
 	}
 }

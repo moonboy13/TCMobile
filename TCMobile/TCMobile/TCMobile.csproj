@@ -26,6 +26,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>AppStrings.resx</DependentUpon>
     </Compile>
+    <Compile Update="Views\ConnnectionInformation.xaml.cs">
+      <DependentUpon>ConnnectionInformation.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -34,6 +37,9 @@
       <LastGenOutput>AppStrings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\AllProjectsPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\ConnnectionInformation.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>

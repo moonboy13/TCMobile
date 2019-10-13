@@ -7,6 +7,11 @@ using Xamarin.Forms.Xaml;
 
 using TCMobile.Models;
 using System.Diagnostics;
+using TCConnector;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using TeamCityAPI;
+using Xamarin.Essentials;
 
 namespace TCMobile.Views
 {
@@ -16,6 +21,8 @@ namespace TCMobile.Views
 	public partial class MainPage : MasterDetailPage
 	{
 		Dictionary<int, NavigationPage> MenuPages = new Dictionary<int, NavigationPage>();
+		IServerConnection _serverConnection;
+
 		public MainPage()
 		{
 			InitializeComponent();
@@ -23,6 +30,12 @@ namespace TCMobile.Views
 			MasterBehavior = MasterBehavior.Popover;
 
 			MenuPages.Add((int)MenuItemType.RunningBuilds, (NavigationPage)Detail);
+
+			if (!InitializeConnection().Result)
+			{
+				// Show connection configuration page
+				Detail = new NavigationPage(new ConnectionInformation(new ViewModels.ConnectionInformationViewModel(null)));
+			}
 		}
 
 		public async Task NavigateFromMenu(int id)
@@ -58,6 +71,35 @@ namespace TCMobile.Views
 
 				IsPresented = false;
 			}
+		}
+
+		private async Task<bool> InitializeConnection()
+		{
+			bool connectionEstablished = false;
+			var infoJson = await SecureStorage.GetAsync("TCConnection");
+			var conInfo = (infoJson != null) ? JsonConvert.DeserializeObject<TCConnectionData>(infoJson) : null;
+
+			// Attempt to connect
+			if (conInfo != null)
+			{
+				switch (conInfo.ConnectionType)
+				{
+					case ConnectionType.Guest:
+						_serverConnection = new ServerConnection(conInfo.Url, conInfo.Port);
+						break;
+					case ConnectionType.Basic:
+						_serverConnection = new ServerConnection(conInfo.Url, conInfo.Port, conInfo.Username, conInfo.Password);
+						break;
+					case ConnectionType.Token:
+					default:
+						_serverConnection = new ServerConnection(conInfo.Url, conInfo.Port, conInfo.AuthToken);
+						break;
+				}
+
+				connectionEstablished = await _serverConnection.TestConnection();
+			}
+
+			return connectionEstablished;
 		}
 	}
 }

@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3-beta2" />
-    <PackageReference Include="TeamCityAPI" Version="0.1.3" />
+    <PackageReference Include="TeamCityAPI" Version="0.1.5" />
     <PackageReference Include="Unity" Version="5.11.1" />
   </ItemGroup>
 

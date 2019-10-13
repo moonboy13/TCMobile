@@ -97,6 +97,15 @@ namespace TCMobile {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Connection Information.
+        /// </summary>
+        internal static string ConnectionInfo {
+            get {
+                return ResourceManager.GetString("ConnectionInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error.
         /// </summary>
         internal static string Error {

@@ -22,8 +22,6 @@ namespace TCMobile
 			DependencyService.Register<MockDataStore>();
 			DependencyService.Register<ProjectSummaryDataStore>();
 
-			TCConnectionData connectionInfo = GetConnectionInfo().Result;
-
 			MainPage = new MainPage();
 		}
 
@@ -56,6 +54,7 @@ namespace TCMobile
 		{
 			// Handle when your app sleeps
 			// Probably want to close any connections here
+			StoreConnectionInfo(new TCConnectionData());
 		}
 
 		protected override void OnResume()
