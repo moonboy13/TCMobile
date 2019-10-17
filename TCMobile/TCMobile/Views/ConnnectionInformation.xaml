@@ -9,7 +9,7 @@
         <StackLayout>
             <Entry Placeholder="Server URL" Text="{Binding ConnectionData.Url}"/>
             <Entry Placeholder="Port" Text="{Binding ConnectionData.Port}" Keyboard="Numeric"/>
-            <Picker Title="Connection Type" ItemsSource="{Binding ConnectionTypes}" SelectedItem="{Binding ConnectionData.ConnectionType}" />
+            <Picker x:Name="Picker" Title="Connection Type" ItemsSource="{Binding ConnectionTypes}"/>
             <Entry Placeholder="Username" Text="{Binding ConnectionData.Username}"/>
             <Entry IsPassword="True" Placeholder="Password" Text="{Binding ConnectionData.Password}"/>
             <Entry IsPassword="True" Placeholder="Authorization Token" Text="{Binding ConnectionData.AuthToken}"/>
