@@ -54,7 +54,8 @@ namespace TCMobile
 		{
 			// Handle when your app sleeps
 			// Probably want to close any connections here
-			StoreConnectionInfo(new TCConnectionData());
+			//StoreConnectionInfo(new TCConnectionData());
+			SecureStorage.RemoveAll();
 		}
 
 		protected override void OnResume()

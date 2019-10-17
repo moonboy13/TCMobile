@@ -27,5 +27,8 @@ namespace TCMobile.Views
 		{
 			DisplayAlert(AppStrings.Error, message, AppStrings.Ok);
 		}
+
+		void Save_Clicked(object sender, EventArgs e)
+		{}
 	}
 }

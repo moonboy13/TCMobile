@@ -23,11 +23,38 @@ namespace TCMobile.ViewModels
 			set { SetProperty(ref _conTypes, value); }
 		}
 
+		private ConnectionType _selectedConnection;
+		public ConnectionType SelectedConnection
+		{
+			get { return _selectedConnection; }
+			set { SetProperty(ref _selectedConnection, value, onChanged: SelectedConnectionChange); }
+		}
+
+		private bool _enableUsernamePassword;
+		public bool EnableUsernamePassword
+		{
+			get { return _enableUsernamePassword; }
+			set { SetProperty(ref _enableUsernamePassword, value); }
+		}
+
+		private bool _enableToken;
+		public bool EnableToken
+		{
+			get { return _enableToken; }
+			set { SetProperty(ref _enableToken, value); }
+		}
+
 		public ConnectionInformationViewModel(TCConnectionData connectionData)
 		{
 			Title = AppStrings.ConnectionInfo;
 			ConnectionData = connectionData ?? new TCConnectionData();
 			ConnectionTypes = Enum.GetValues(typeof(ConnectionType)).Cast<ConnectionType>().ToList();
+		}
+
+		private void SelectedConnectionChange()
+		{
+			EnableUsernamePassword = (_selectedConnection == ConnectionType.Basic);
+			EnableToken = (_selectedConnection == ConnectionType.Token);
 		}
 	}
 }

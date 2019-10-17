@@ -96,7 +96,15 @@ namespace TCMobile.Views
 						break;
 				}
 
-				connectionEstablished = await _serverConnection.TestConnection();
+				try
+				{
+					connectionEstablished = await _serverConnection.TestConnection();
+				}
+				catch
+				{
+					// TODO: may want to be a bit more helpful here, maybe a toast message.
+					connectionEstablished = false;
+				}
 			}
 
 			return connectionEstablished;
