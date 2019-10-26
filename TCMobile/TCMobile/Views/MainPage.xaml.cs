@@ -18,7 +18,7 @@ namespace TCMobile.Views
 	// Learn more about making custom code visible in the Xamarin.Forms previewer
 	// by visiting https://aka.ms/xamarinforms-previewer
 	[DesignTimeVisible(false)]
-	public partial class MainPage : MasterDetailPage
+	public partial class MainPage : MasterDetailPage, IDisposable
 	{
 		Dictionary<int, NavigationPage> MenuPages = new Dictionary<int, NavigationPage>();
 		IServerConnection _serverConnection;
@@ -108,6 +108,11 @@ namespace TCMobile.Views
 			}
 
 			return connectionEstablished;
+		}
+
+		public void Dispose()
+		{
+			_serverConnection.Dispose();
 		}
 	}
 }

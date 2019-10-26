@@ -44,8 +44,8 @@ namespace TCMobile.Views
 		{
 			try
 			{
-				var connection = new ServerConnection("http://192.168.56.1", 8080);
-				Task.Run(async () => await connection.TestConnection()).Wait();
+				using (var connection = new ServerConnection("http://192.168.56.1", 8080))
+					Task.Run(async () => await connection.TestConnection()).Wait();
 			}
 			catch (Exception ex)
 			{

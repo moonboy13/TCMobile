@@ -49,6 +49,7 @@ namespace TCMobile.ViewModels
 			Title = AppStrings.ConnectionInfo;
 			ConnectionData = connectionData ?? new TCConnectionData();
 			ConnectionTypes = Enum.GetValues(typeof(ConnectionType)).Cast<ConnectionType>().ToList();
+			SelectedConnection = connectionData?.ConnectionType ?? ConnectionType.Guest;
 		}
 
 		private void SelectedConnectionChange()
