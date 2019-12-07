@@ -8,7 +8,7 @@ using Xamarin.Forms;
 using TCMobile.Models;
 using TCMobile.Views;
 using System.Collections.Generic;
-using TeamCityAPI;
+using TCConnection;
 
 namespace TCMobile.ViewModels
 {
@@ -17,15 +17,13 @@ namespace TCMobile.ViewModels
 		public ObservableCollection<ProjectSummary> Projects { get; set; }
 		public Command LoadItemsCommand { get; set; }
 
-		IServerConnection _Connection;
 		Projects _Projects;
 
 		public ProjectSummaryViewModel()
 		{
 			Title = AppStrings.ProjectsSummary;
 			LoadItemsCommand = new Command(async () => await LoadItems());
-			_Connection = new ServerConnection("http://192.168.56.1", 8080);
-			_Projects = new Projects(_Connection);
+			_Projects = new Projects();
 		}
 
 		/// <summary>

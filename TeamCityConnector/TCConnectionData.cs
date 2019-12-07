@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using TeamCityAPI;
 
-namespace TCConnector
+namespace TCConnection
 {
 	public class TCConnectionData
 	{

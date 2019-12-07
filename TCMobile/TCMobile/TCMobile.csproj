@@ -11,13 +11,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="4.4.0.936621-pre1" />  
+    <PackageReference Include="Xamarin.Forms" Version="4.4.0.991220-pre3" />  
     <PackageReference Include="Xamarin.Essentials" Version="1.3.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\DataModels\DataModels.csproj" />
-    <ProjectReference Include="..\..\TeamCityConnector\TCConnector.csproj" />
+    <ProjectReference Include="..\..\TeamCityConnector\TCConnection.csproj" />
   </ItemGroup>
 
   <ItemGroup>

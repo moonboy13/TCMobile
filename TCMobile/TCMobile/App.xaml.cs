@@ -5,7 +5,7 @@ using TCMobile.Services;
 using TCMobile.Views;
 using Xamarin.Essentials;
 using TeamCityAPI;
-using TCConnector;
+using TCConnection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Threading.Tasks;

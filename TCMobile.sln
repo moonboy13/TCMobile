@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TCMobile.iOS", "TCMobile\TC
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TCMobile", "TCMobile\TCMobile\TCMobile.csproj", "{C3021B9F-D7C6-435A-873C-9A00D22FA80F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TCConnector", "TeamCityConnector\TCConnector.csproj", "{BD8F2D7D-6653-42DF-8C36-C9A49A47EFFE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TCConnection", "TeamCityConnector\TCConnection.csproj", "{BD8F2D7D-6653-42DF-8C36-C9A49A47EFFE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataModels", "DataModels\DataModels.csproj", "{7AF2067E-544C-4AD0-8C73-7FC67C8B828D}"
 EndProject

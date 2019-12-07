@@ -7,20 +7,13 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Threading.Tasks;
 
-namespace TeamCityAPI
+namespace TCConnection
 {
 	public class Projects
 	{
-		IServerConnection _serverConnection;
-
-		public Projects(IServerConnection connection)
-		{
-			_serverConnection = connection;
-		}
-
 		public async Task<List<ProjectSummary>> GetProjects()
 		{
-			HttpResponseMessage response = await _serverConnection.MakeRequest("projects");
+			HttpResponseMessage response = await Connection.Instance.MakeRequest("projects");
 
 			if (!response.IsSuccessStatusCode)
 			{

@@ -10,12 +10,12 @@
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <StackLayout>
-            <Entry Placeholder="Server URL" Text="{Binding ConnectionData.Url}"/>
-            <Entry Placeholder="Port" Text="{Binding ConnectionData.Port}" Keyboard="Numeric"/>
+            <Entry Placeholder="Server URL" Text="{Binding Url}"/>
+            <Entry Placeholder="Port" Text="{Binding Port}" Keyboard="Numeric"/>
             <Picker x:Name="Picker" Title="Connection Type" ItemsSource="{Binding ConnectionTypes}" SelectedItem="{Binding SelectedConnection}"/>
-            <Entry Placeholder="Username" Text="{Binding ConnectionData.Username}" IsEnabled="{Binding EnableUsernamePassword}"/>
-            <Entry IsPassword="True" Placeholder="Password" Text="{Binding ConnectionData.Password}" IsEnabled="{Binding EnableUsernamePassword}"/>
-            <Entry IsPassword="True" Placeholder="Authorization Token" Text="{Binding ConnectionData.AuthToken}" IsEnabled="{Binding EnableToken}"/>
+            <Entry Placeholder="Username" Text="{Binding Username}" IsEnabled="{Binding EnableUsernamePassword}"/>
+            <Entry IsPassword="True" Placeholder="Password" Text="{Binding Password}" IsEnabled="{Binding EnableUsernamePassword}"/>
+            <Entry IsPassword="True" Placeholder="Authorization Token" Text="{Binding AuthToken}" IsEnabled="{Binding EnableToken}"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

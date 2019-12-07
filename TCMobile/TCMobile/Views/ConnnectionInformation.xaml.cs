@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using TCMobile.ViewModels;
-using TeamCityAPI;
+using TCConnection;
 
 namespace TCMobile.Views
 {
@@ -34,33 +34,21 @@ namespace TCMobile.Views
 
 		void Save_Clicked(object sender, EventArgs e)
 		{
-			IServerConnection serverConnection = null;
-			// Test that the connection. If it works then save the results.
 			try
 			{
-				switch (_ViewModel.SelectedConnection)
+				Connection.Instance.InitializeConnection(_ViewModel.ConnectionData);
+				if (!Connection.Instance.TestConnection().Result)
 				{
-					case ConnectionType.Guest:
-						serverConnection = new ServerConnection(_ViewModel.ConnectionData.Url,
-												 _ViewModel.ConnectionData.Port);
-						break;
-					case ConnectionType.Basic:
-						serverConnection = new ServerConnection(_ViewModel.ConnectionData.Url,
-												 _ViewModel.ConnectionData.Port,
-												 _ViewModel.ConnectionData.Username,
-												 _ViewModel.ConnectionData.Password);
-						break;
-					case ConnectionType.Token:
-					default:
-						serverConnection = new ServerConnection(_ViewModel.ConnectionData.Url,
-												 _ViewModel.ConnectionData.Port,
-												 _ViewModel.ConnectionData.AuthToken);
-						break;
+					// stay here and display message.
+				}
+				else
+				{
+					this.Navigation.PopAsync();
 				}
 			}
-			finally
+			catch (Exception ex)
 			{
-				serverConnection?.Dispose();
+				_ViewModel.DisplayErrorHandler?.Invoke(ex.Message);
 			}
 		}
 	}

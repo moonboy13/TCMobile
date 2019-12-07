@@ -7,7 +7,7 @@ using Xamarin.Forms.Xaml;
 
 using TCMobile.Models;
 using System.Diagnostics;
-using TCConnector;
+using TCConnection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using TeamCityAPI;

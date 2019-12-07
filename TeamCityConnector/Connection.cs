@@ -5,14 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using TeamCityAPI;
 
-namespace TCConnector
+namespace TCConnection
 {
-	public class TCConnection
+	public class Connection
 	{
-		private static object locker;
+		private static object locker = new object();
 
-		private static TCConnection _instance;
-		public static TCConnection Instance
+		private static Connection _instance;
+		public static Connection Instance
 		{
 			get
 			{
@@ -22,7 +22,7 @@ namespace TCConnector
 					{
 						lock(locker)
 						{
-							_instance = new TCConnection();
+							_instance = new Connection();
 						}
 					}
 				}
@@ -67,9 +67,14 @@ namespace TCConnector
 			}
 		}
 
-		public bool TestCoonection()
+		public async Task<bool> TestConnection()
 		{
-			return _ServerConnection.TestConnection().Result;
+			return await _ServerConnection.TestConnection();
+		}
+
+		public async Task<HttpResponseMessage> MakeRequest(string requestURI)
+		{
+			return await _ServerConnection.MakeRequest(requestURI);
 		}
 	}
 }

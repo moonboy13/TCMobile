@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using TCConnector;
+using TCConnection;
 using TeamCityAPI;
 
 namespace TCMobile.ViewModels
@@ -14,6 +14,36 @@ namespace TCMobile.ViewModels
 		{
 			get { return _conData; }
 			set { SetProperty(ref _conData, value); }
+		}
+
+		public string Url
+		{
+			get { return _conData.Url; }
+			set { SetProperty(ref _conData.Url, value); }
+		}
+
+		public int Port
+		{
+			get { return _conData.Port; }
+			set { SetProperty(ref _conData.Port, value);  }
+		}
+
+		public string Username
+		{
+			get { return _conData.Username; }
+			set { SetProperty(ref _conData.Username, value); }
+		}
+
+		public string Password
+		{
+			get { return _conData.Password; }
+			set { SetProperty(ref _conData.Password, value); }
+		}
+
+		public string AuthToken
+		{
+			get { return _conData.AuthToken; }
+			set { SetProperty(ref _conData.AuthToken, value); }
 		}
 
 		private List<ConnectionType> _conTypes;
