@@ -69,12 +69,13 @@ namespace TCConnection
 
 		public async Task<bool> TestConnection()
 		{
-			return await _ServerConnection.TestConnection();
+			_ServerConnection.SetTimeout(new TimeSpan(0, 0, 15));
+			return await _ServerConnection.TestConnection().ConfigureAwait(false);
 		}
 
 		public async Task<HttpResponseMessage> MakeRequest(string requestURI)
 		{
-			return await _ServerConnection.MakeRequest(requestURI);
+			return await _ServerConnection.MakeRequest(requestURI).ConfigureAwait(false);
 		}
 	}
 }

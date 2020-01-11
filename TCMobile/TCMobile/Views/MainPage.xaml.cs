@@ -34,7 +34,7 @@ namespace TCMobile.Views
 			if (!InitializeConnection().Result)
 			{
 				// Show connection configuration page
-				Detail = new NavigationPage(new ConnectionInformation(new ViewModels.ConnectionInformationViewModel(null)));
+				Navigation.PushModalAsync(new NavigationPage(new ConnectionInformation(new ViewModels.ConnectionInformationViewModel(null))));
 			}
 		}
 

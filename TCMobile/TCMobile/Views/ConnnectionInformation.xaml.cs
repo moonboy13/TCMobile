@@ -32,18 +32,20 @@ namespace TCMobile.Views
 			DisplayAlert(AppStrings.Error, message, AppStrings.Ok);
 		}
 
-		void Save_Clicked(object sender, EventArgs e)
+		async void Save_Clicked(object sender, EventArgs e)
 		{
 			try
 			{
 				Connection.Instance.InitializeConnection(_ViewModel.ConnectionData);
-				if (!Connection.Instance.TestConnection().Result)
+				bool results = await Connection.Instance.TestConnection().ConfigureAwait(false);
+				if (!results)
 				{
 					// stay here and display message.
+					DisplayError(AppStrings.ConnectionError);
 				}
 				else
 				{
-					this.Navigation.PopAsync();
+					await this.Navigation.PopModalAsync();
 				}
 			}
 			catch (Exception ex)

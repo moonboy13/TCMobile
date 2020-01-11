@@ -129,6 +129,9 @@
   <data name="Changes" xml:space="preserve">
     <value>Changes</value>
   </data>
+  <data name="ConnectionError" xml:space="preserve">
+    <value>Unable to establish connection to server. Verify connection information.</value>
+  </data>
   <data name="ConnectionInfo" xml:space="preserve">
     <value>Connection Information</value>
   </data>
