@@ -1,12 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-    <PackageReference Include="TeamCityAPI" Version="0.1.11" />
+    <PackageReference Include="TeamCityAPI" Version="0.1.13" />
     <PackageReference Include="Unity" Version="5.11.3" />
   </ItemGroup>
 

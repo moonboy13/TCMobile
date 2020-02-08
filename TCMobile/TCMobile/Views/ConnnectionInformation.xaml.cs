@@ -8,6 +8,8 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using TCMobile.ViewModels;
 using TCConnection;
+using Xamarin.Essentials;
+using Newtonsoft.Json;
 
 namespace TCMobile.Views
 {
@@ -45,6 +47,8 @@ namespace TCMobile.Views
 				}
 				else
 				{
+					// Cache the connection information to the device.
+					await SecureStorage.SetAsync("Foo", JsonConvert.SerializeObject(_ViewModel.ConnectionData));
 					await this.Navigation.PopModalAsync();
 				}
 			}

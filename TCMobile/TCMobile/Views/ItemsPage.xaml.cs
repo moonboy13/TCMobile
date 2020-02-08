@@ -39,20 +39,6 @@ namespace TCMobile.Views
 			// Manually deselect item.
 			ItemsListView.SelectedItem = null;
 		}
-
-		void TestConnection_Clicked(object sender, EventArgs e)
-		{
-			try
-			{
-				using (var connection = new ServerConnection("http://192.168.56.1", 8080))
-					Task.Run(async () => await connection.TestConnection()).Wait();
-			}
-			catch (Exception ex)
-			{
-				DisplayAlert(AppStrings.Error, ex.Message, AppStrings.Ok);
-			}
-		}
-
 		protected override void OnAppearing()
 		{
 			base.OnAppearing();
@@ -65,6 +51,7 @@ namespace TCMobile.Views
 		{
 
 		}
+
 		void DisplayError(string message)
 		{
 			DisplayAlert(AppStrings.Error, message, AppStrings.Ok);

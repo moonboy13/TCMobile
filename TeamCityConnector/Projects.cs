@@ -6,14 +6,24 @@ using System.Text;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Threading.Tasks;
+using TeamCityAPI;
 
 namespace TCConnection
 {
 	public class Projects
 	{
+		ProjectsConnector _Projects;
+
+		public Projects()
+		{
+			// TODO: This is weird. This responsibility belongs on the API
+			_Projects = new ProjectsConnector(Connection.ServerConnection);
+		}
+
+
 		public async Task<List<ProjectSummary>> GetProjects()
 		{
-			HttpResponseMessage response = await Connection.Instance.MakeRequest("projects");
+			HttpResponseMessage response = await _Projects.GET_serveProjects(null, null);
 
 			if (!response.IsSuccessStatusCode)
 			{
@@ -21,18 +31,16 @@ namespace TCConnection
 			}
 
 			string data = await response.Content.ReadAsStringAsync();
-			JObject responseData = JObject.Parse(data);
-			List<ProjectSummary> projectSummaries = new List<ProjectSummary>();
+			var responseData = JObject.Parse(data);
+			var projectSummaries = new List<ProjectSummary>();
 
 			foreach (JToken proj in responseData["project"].Children())
 			{
-				ProjectSummary project = proj.ToObject<ProjectSummary>();
+				var project = proj.ToObject<ProjectSummary>();
 				projectSummaries.Add(project);
 			}
 
 			return projectSummaries;
 		}
-
-
 	}
 }

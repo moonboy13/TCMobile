@@ -30,7 +30,7 @@ namespace TCConnection
 			}
 		}
 
-		private static IServerConnection _ServerConnection;
+		public static IServerConnection ServerConnection { get; private set; }
 		private static TCConnectionData _ConnectionData;
 
 		// Initialize the connection to the server.
@@ -39,43 +39,36 @@ namespace TCConnection
 			_ConnectionData = tCConnectionData;
 
 			// If we have an existing connection, reset it.
-			if (_ServerConnection != null)
+			if (ServerConnection != null)
 			{
-				_ServerConnection.Dispose();
-				_ServerConnection = null;
+				ServerConnection.Dispose();
+				ServerConnection = null;
 			}
 
-			switch (_ConnectionData.ConnectionType)
+			ServerConnection = _ConnectionData.ConnectionType switch
 			{
-				case ConnectionType.Guest:
-					_ServerConnection = new ServerConnection(_ConnectionData.Url,
-											 _ConnectionData.Port);
-					break;
-				case ConnectionType.Basic:
-					_ServerConnection = new ServerConnection(_ConnectionData.Url,
-											 _ConnectionData.Port,
-											 _ConnectionData.Username,
-											 _ConnectionData.Password);
-					break;
-				case ConnectionType.Token:
-					_ServerConnection = new ServerConnection(_ConnectionData.Url,
-											 _ConnectionData.Port,
-											 _ConnectionData.AuthToken);
-					break;
-				default:
-					throw new ArgumentException(ConnectionStrings.UnrecognizedType, _ConnectionData.ConnectionType.ToString());
-			}
+				ConnectionType.Guest => new ServerConnection(_ConnectionData.Url,
+															_ConnectionData.Port),
+				ConnectionType.Basic => new ServerConnection(_ConnectionData.Url,
+															_ConnectionData.Port,
+															_ConnectionData.Username,
+															_ConnectionData.Password),
+				ConnectionType.Token => new ServerConnection(_ConnectionData.Url,
+															_ConnectionData.Port,
+															_ConnectionData.AuthToken),
+				_ => throw new ArgumentException(ConnectionStrings.UnrecognizedType, _ConnectionData.ConnectionType.ToString()),
+			};
 		}
 
 		public async Task<bool> TestConnection()
 		{
-			_ServerConnection.SetTimeout(new TimeSpan(0, 0, 15));
-			return await _ServerConnection.TestConnection().ConfigureAwait(false);
+			ServerConnection.SetTimeout(new TimeSpan(0, 0, 15));
+			return await ServerConnection.TestConnection().ConfigureAwait(false);
 		}
 
 		public async Task<HttpResponseMessage> MakeRequest(string requestURI)
 		{
-			return await _ServerConnection.MakeRequest(requestURI).ConfigureAwait(false);
+			return await ServerConnection.MakeRequest(requestURI).ConfigureAwait(false);
 		}
 	}
 }

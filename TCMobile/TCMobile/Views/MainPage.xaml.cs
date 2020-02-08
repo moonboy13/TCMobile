@@ -18,10 +18,9 @@ namespace TCMobile.Views
 	// Learn more about making custom code visible in the Xamarin.Forms previewer
 	// by visiting https://aka.ms/xamarinforms-previewer
 	[DesignTimeVisible(false)]
-	public partial class MainPage : MasterDetailPage, IDisposable
+	public partial class MainPage : MasterDetailPage
 	{
 		Dictionary<int, NavigationPage> MenuPages = new Dictionary<int, NavigationPage>();
-		IServerConnection _serverConnection;
 
 		public MainPage()
 		{
@@ -76,29 +75,26 @@ namespace TCMobile.Views
 		private async Task<bool> InitializeConnection()
 		{
 			bool connectionEstablished = false;
-			var infoJson = await SecureStorage.GetAsync("TCConnection");
+			// TODO: Secure Storage isn't working, need to figure that out. Probs cause the app is removed and readded each debug session.
+			var infoJson = await SecureStorage.GetAsync("Foo");
 			var conInfo = (infoJson != null) ? JsonConvert.DeserializeObject<TCConnectionData>(infoJson) : null;
+
+#if DEBUG
+			conInfo = new TCConnectionData()
+			{
+				Url = "192.168.56.1",
+				Port = 8080,
+				ConnectionType = ConnectionType.Guest
+			};
+#endif
 
 			// Attempt to connect
 			if (conInfo != null)
 			{
-				switch (conInfo.ConnectionType)
-				{
-					case ConnectionType.Guest:
-						_serverConnection = new ServerConnection(conInfo.Url, conInfo.Port);
-						break;
-					case ConnectionType.Basic:
-						_serverConnection = new ServerConnection(conInfo.Url, conInfo.Port, conInfo.Username, conInfo.Password);
-						break;
-					case ConnectionType.Token:
-					default:
-						_serverConnection = new ServerConnection(conInfo.Url, conInfo.Port, conInfo.AuthToken);
-						break;
-				}
-
 				try
 				{
-					connectionEstablished = await _serverConnection.TestConnection();
+					Connection.Instance.InitializeConnection(conInfo);
+					connectionEstablished = await Connection.Instance.TestConnection().ConfigureAwait(false);
 				}
 				catch
 				{
@@ -108,11 +104,6 @@ namespace TCMobile.Views
 			}
 
 			return connectionEstablished;
-		}
-
-		public void Dispose()
-		{
-			_serverConnection.Dispose();
 		}
 	}
 }
