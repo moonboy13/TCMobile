@@ -16,12 +16,12 @@
               CachingStrategy="RecycleElement"
               RefreshCommand="{Binding LoadItemsCommand}"
               IsPullToRefreshEnabled="True"
-              IsRefreshing="{Binding IsBusy, Mode=OneWay}">
+              IsRefreshing="{Binding base.IsBusy, Mode=OneWay}">
         <ListView.ItemTemplate>
             <DataTemplate>
-                <ViewCell>
-                    <Grid>
-                        <Label Text="{Binding Name}" />
+                <ViewCell Height="50">
+                    <Grid VerticalOptions="CenterAndExpand">
+                        <Label Text="{Binding Name}" LineHeight="05" />
                         <Label Grid.Column="1" Text="{Binding Description}" />
                     </Grid>
                 </ViewCell>

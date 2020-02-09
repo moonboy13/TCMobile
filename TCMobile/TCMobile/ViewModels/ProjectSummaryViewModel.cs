@@ -26,6 +26,11 @@ namespace TCMobile.ViewModels
 			_Projects = new Projects();
 		}
 
+		async public Task<Project> test(string id)
+		{
+			return await _Projects.GetProject(id).ConfigureAwait(false);
+		}
+
 		/// <summary>
 		/// Responsible for firing off the request to the server and parsing the response.
 		/// </summary>
@@ -48,7 +53,8 @@ namespace TCMobile.ViewModels
 				IEnumerable<ProjectSummary> projects = await projectsTask;
 				foreach (var project in projects)
 				{
-					updatedProjects.Add(project);
+					if(!project.Id.Trim().ToLower().Equals("_root"))
+						updatedProjects.Add(project);
 				}
 
 				Projects = updatedProjects;

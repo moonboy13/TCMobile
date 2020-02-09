@@ -42,5 +42,18 @@ namespace TCConnection
 
 			return projectSummaries;
 		}
+
+		public async Task<Project> GetProject(string projId)
+		{
+			HttpResponseMessage response = await _Projects.GET_serveProject_projectLocator(null, $"id:{projId.Trim()}");
+
+			if (!response.IsSuccessStatusCode)
+			{
+				throw new HttpRequestException(response.ReasonPhrase);
+			}
+
+			string data = await response.Content.ReadAsStringAsync();
+			return JObject.Parse(data).ToObject<Project>();
+		}
 	}
 }

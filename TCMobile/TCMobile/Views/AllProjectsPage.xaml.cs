@@ -56,10 +56,10 @@ namespace TCMobile.Views
 			if (e.Item == null)
 				return;
 
-			await DisplayAlert("Item Tapped", "An item was tapped.", "OK");
+			var foo = await _ViewModel.test((e.Item as ProjectSummary).Id).ConfigureAwait(false);
 
-			//Deselect Item
-			((ListView)sender).SelectedItem = null;
+			// Push the Project page onto the navigation stack
+			await Navigation.PushAsync(null);
 		}
 
 		void DisplayError(string message)
