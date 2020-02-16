@@ -26,11 +26,6 @@ namespace TCMobile.ViewModels
 			_Projects = new Projects();
 		}
 
-		async public Task<Project> test(string id)
-		{
-			return await _Projects.GetProject(id).ConfigureAwait(false);
-		}
-
 		/// <summary>
 		/// Responsible for firing off the request to the server and parsing the response.
 		/// </summary>

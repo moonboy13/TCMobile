@@ -56,10 +56,8 @@ namespace TCMobile.Views
 			if (e.Item == null)
 				return;
 
-			var foo = await _ViewModel.test((e.Item as ProjectSummary).Id).ConfigureAwait(false);
-
 			// Push the Project page onto the navigation stack
-			await Navigation.PushAsync(null);
+			await Navigation.PushAsync(new ProjectDetailPage(new ProjectViewModel((e.Item as ProjectSummary).Id)));
 		}
 
 		void DisplayError(string message)

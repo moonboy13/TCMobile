@@ -133,6 +133,15 @@ namespace TCMobile {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unknown Project Selected.
+        /// </summary>
+        internal static string ProjectNotFound {
+            get {
+                return ResourceManager.GetString("ProjectNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Projects.
         /// </summary>
         internal static string Projects {
